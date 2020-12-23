@@ -45,7 +45,7 @@ class AwsS3{
                 };
 
                 // Uploading files to the bucket
-                this.s3.upload(params, function(error, data) {
+                this.s3.upload(params, (error, data) => {
                     if (error) {
                         resolve({error: true, message: "AWS Upload error"})
                     }

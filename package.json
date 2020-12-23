@@ -1,16 +1,17 @@
 {
-  "name": "aws_s3",
+  "name": "sk-aws-s3",
   "version": "1.0.0",
   "description": "",
   "main": "AwsS3.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Sawyerr Ken",
   "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.816.0",
     "lodash": "^4.17.20",
     "randomstring": "^1.1.5"
-  }
+  },
+  "repository": "https://github.com/sawyerrken/sk-aws-s3"
 }

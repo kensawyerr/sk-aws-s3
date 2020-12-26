@@ -26,36 +26,22 @@ class AwsS3{
             }
 
             let filename = `${randomstring.generate(5)}${file.name}`;
-            //first move file to temporary location
-            file.mv(`${filename}`, (error)=>{
 
-                if(error){
-                    resolve({error: true, message: "File upload error"});
+            // Setting up S3 upload parameters
+            const params = {
+                Bucket: this.awsBucketName,
+                Key: filename, // File name you want to save as in S3
+                Body: file.data
+            };
+
+            // Uploading files to the bucket
+            this.s3.upload(params, (error, data) => {
+                if (error) {
+                    resolve({error: true, message: "AWS Upload error"})
                 }
 
-
-                // Read content from the file
-                const fileContent = fs.readFileSync(filename);
-
-                // Setting up S3 upload parameters
-                const params = {
-                    Bucket: this.awsBucketName,
-                    Key: filename, // File name you want to save as in S3
-                    Body: fileContent
-                };
-
-                // Uploading files to the bucket
-                this.s3.upload(params, (error, data) => {
-                    if (error) {
-                        resolve({error: true, message: "AWS Upload error"})
-                    }
-
-                    //delete local file after upload
-                    fs.unlink(filename, ()=>{});
-
-                    //return the link to the uploaded file on aws
-                    resolve({uploaded: true, objectUrl: `${this.awsBucketUrl}${filename}`});
-                });
+                //return the link to the uploaded file on aws
+                resolve({uploaded: true, objectUrl: `${this.awsBucketUrl}${filename}`});
             });
         });
     }
